@@ -437,12 +437,12 @@ export default class Sprite {
     if (this._offsetSprite) {
       this._initialBounds = relativeBounds(this._getScaledBoundingClientRect(), this._offsetSprite.initialBounds);
     } else {
-      this._initialBounds = this.element.getBoundingClientRect();
+      this._initialBounds = this._getScaledBoundingClientRect();
     }
     this._initialComputedStyle = copyComputedStyle(this.element);
     this._initialPosition = this._getCurrentPosition();
     this._originalInitialBounds = this._initialBounds;
-    this._initialCumulativeTransform = cumulativeTransform(this.element);
+    this._initialCumulativeTransform = this.cumulativeTransform;
   }
 
   measureFinalBounds() {
@@ -453,12 +453,12 @@ export default class Sprite {
     if (this._offsetSprite) {
       this._finalBounds = relativeBounds(this._getScaledBoundingClientRect(), this._offsetSprite.finalBounds);
     } else {
-      this._finalBounds = this.element.getBoundingClientRect();
+      this._finalBounds = this._getScaledBoundingClientRect();
     }
     this._finalComputedStyle = copyComputedStyle(this.element);
     this._finalPosition = this._getCurrentPosition();
     this._originalFinalBounds = this._finalBounds;
-    this._finalCumulativeTransform = cumulativeTransform(this.element);
+    this._finalCumulativeTransform = this.cumulativeTransform;
   }
 
   _getScaledBoundingClientRect() {

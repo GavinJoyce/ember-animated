@@ -29,7 +29,7 @@ export default Component.extend({
   leftItems: computed({
     get() {
       let result = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 2; i++) {
         result.push(makeRandomItem());
       }
       return result.sort(numeric);
@@ -42,7 +42,7 @@ export default Component.extend({
   rightItems: computed({
     get() {
       let result = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 2; i++) {
         result.push(makeRandomItem());
       }
       return result.sort(numeric);
@@ -68,6 +68,10 @@ export default Component.extend({
       if (this.get('bounceBack') && bounceCounter > 0) {
         later(() => this.send('move', item, bounceCounter - 1), 1000);
       }
+    },
+    changeScale(scaleValue) {
+      this.element.style['transform-origin'] = '0px 0px';
+      this.element.style.transform = `scale(${scaleValue})`;
     }
   }
 });

@@ -40,6 +40,7 @@ export default class TransitionContext {
   }
 
   _prepareSprites(sprites) {
+    // console.log('_prepareSprites', sprites);
     // Link them up, so that users can conveniently pass sprites
     // around to Motions without also passing the transition context.
     sprites.forEach(sprite => sprite._transitionContext = this);

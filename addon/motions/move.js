@@ -27,8 +27,32 @@ export class Move extends Motion {
     {
       let initial = sprite.initialBounds;
       let final = sprite.finalBounds;
+
+      console.log('AA INITIAL', initial);
+      console.log('AA FINAL', final);
+
+      // if (final.left === 100) {
+      //   final.left = 50;
+      // }
+
+      // if (final.left === 200) {
+      //   final.left = 100;
+      // }
+
+      // initial.left = initial.left * (1 / sprite._initialCumulativeTransform.a);
+      // final.left = final.left * (1 / sprite._initialCumulativeTransform.a);
+
+      // initial.top = initial.top * (1 / sprite._initialCumulativeTransform.d);
+      // final.top = final.top * (1 / sprite._initialCumulativeTransform.d);
+
+      // console.log('AA . INITIAL', initial);
+      // console.log('AA . FINAL', final);
+
       dx = final.left - initial.left;
       dy = final.top - initial.top;
+
+      // dx = dx * (1 / sprite._initialCumulativeTransform.a);
+      // dy = dy * (1 / sprite._initialCumulativeTransform.d);
     }
 
     if (!this.prior) {

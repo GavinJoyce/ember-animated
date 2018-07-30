@@ -508,6 +508,16 @@ module("Unit | Sprite", function(hooks) {
     assert.approxEqualPixels(m.initialBounds.left + 100, m.finalBounds.left, 'left reflects movement');
   });
 
+  test("measures and remembers final bounds in a scaled container", function(assert) {
+    let m = sprite(target);
+    target.style.transform = 'translateX(100px)';
+    environment.style.transform = 'scale(0.5)';
+    environment.style.transformOrigin = '0 0';
+    m.measureFinalBounds();
+    assert.approxEqualPixels(m.finalBounds.top, m.initialBounds.top, 'top constant');
+    assert.approxEqualPixels(m.initialBounds.left + 100, m.finalBounds.left, 'left reflects movement');
+  });
+
   test("requires an initial position sprite to have an initial positioned offset measurement", function(assert) {
     let parent = Sprite.offsetParentEndingAt(target);
     assert.throws(() => {

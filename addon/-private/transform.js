@@ -16,6 +16,8 @@
 
 export default class Transform {
   constructor(a, b, c, d, tx, ty) {
+    console.log('TRANSFORM', tx, ty);
+    // debugger;
     // WARNING: never mutate an existing Transform. Some of them are
     // shared. Operations need to return new Transforms instead.
     this.a = a;
@@ -120,6 +122,7 @@ export function cumulativeTransform(elt) {
  * @return {Transform} instance representing this element's css transform property.
  */
 export function ownTransform(elt) {
+  // console.log('ownTransform', elt);
   let eltStyles = window.getComputedStyle(elt);
   let t = eltStyles.transform !== '' ? eltStyles.transform : elt.style.transform;
   if (t === 'none') {

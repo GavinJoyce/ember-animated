@@ -29,7 +29,7 @@ export default Component.extend({
   leftItems: computed({
     get() {
       let result = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 2; i++) {
         result.push(makeRandomItem());
       }
       return result.sort(numeric);
@@ -42,7 +42,7 @@ export default Component.extend({
   rightItems: computed({
     get() {
       let result = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 2; i++) {
         result.push(makeRandomItem());
       }
       return result.sort(numeric);

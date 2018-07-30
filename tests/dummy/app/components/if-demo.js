@@ -6,11 +6,11 @@ import {easeOut, easeIn } from 'ember-animated/easings/cosine';
 
 export default Component.extend({
   showThing: false,
-  
+
   toggleThing() {
     this.set('showThing', !this.get('showThing'));
   },
- 
+
   transition: function * ({ insertedSprites, keptSprites, removedSprites }) {
     insertedSprites.forEach(sprite => {
       sprite.startAtPixel({ x: window.innerWidth });
@@ -24,4 +24,11 @@ export default Component.extend({
       move(sprite, { easing: easeIn });
     });
   },
+
+  actions: {
+    changeScale(scaleValue) {
+      this.element.style['transform-origin'] = '0px 0px';
+      this.element.style.transform = `scale(${scaleValue})`;
+    }
+  }
 });

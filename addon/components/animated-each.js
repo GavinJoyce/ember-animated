@@ -436,6 +436,8 @@ export default Component.extend({
     // elements we contain. This records their initial positions.
     let { currentSprites, parent } = this._findCurrentSprites();
 
+    //NOTE: GJ: the _imposedStyle.width and height don't appear to be affected by the containing scale
+
     // Warn the rest of the universe that we're about to animate.
     this.get('motionService').willAnimate({
       task: animateTask,

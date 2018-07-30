@@ -17,17 +17,24 @@ export default Controller.extend({
 
   items: computed(function() {
     let items = A();
-    for (let i = 0; i < 4; i++) {
-      items.push(Item.create({ id: i, x: somewhere(), y: somewhere() }));
-    }
+    items.push(Item.create({ id: 1, x: 200, y: 0 }));
     return items;
   }),
   actions: {
     go() {
       this.get('items').forEach(i => {
-        i.set('x', somewhere());
-        i.set('y', somewhere());
+        let target = 200;
+        if (i.get('x') === 200) {
+          target = 100;
+        }
+        i.set('x', target);
+        // i.set('y', 0);
       });
+    },
+    changeScale(scaleValue) {
+      let el = document.getElementsByClassName('scenario-direct-style')[0];
+      el.style['transform-origin'] = '0px 0px';
+      el.style.transform = `scale(${scaleValue})`;
     }
   }
 });

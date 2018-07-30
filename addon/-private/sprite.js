@@ -65,6 +65,7 @@ export default class Sprite {
   }
 
   static offsetParentEndingAt(element) {
+    // console.log('offsetParentEndingAt', element);
     let parent = getEffectiveOffsetParent(element);
     if (!parent) {
       parent = document.getElementsByTagName('body')[0];
@@ -73,6 +74,8 @@ export default class Sprite {
   }
 
   static positionedStartingAt(element, offsetSprite) {
+    // console.log('AA positionedStartingAt', element, offsetSprite);
+
     if (!offsetSprite.initialBounds) {
       throw new Error("offset sprite must have initial bounds");
     }
@@ -83,6 +86,8 @@ export default class Sprite {
     if (!offsetSprite.finalBounds) {
       throw new Error("offset sprite must have final bounds");
     }
+    console.log('positionedEndingAt', element);
+    // debugger;
     return new this(element, false, 'position', offsetSprite);
   }
 
@@ -97,10 +102,13 @@ export default class Sprite {
     sprite._initialPosition = sprite._finalPosition;
     sprite._originalInitialBounds = sprite._initialBounds;
     sprite._initialCumulativeTransform = sprite._finalCumulativeTransform;
+    // console.log('sizedEndingAt', sprite);
     return sprite;
   }
 
   constructor(element, inInitialPosition, lockMode, offsetSprite) {
+    // console.log('sprite constructor');
+    // debugger;
     this.element = element;
     this.owner = null;
     this._transform = null;
@@ -435,9 +443,10 @@ export default class Sprite {
     }
     this._inInitialPosition = true;
     if (this._offsetSprite) {
-      this._initialBounds = relativeBounds(this.element.getBoundingClientRect(), this._offsetSprite.initialBounds);
+      // debugger;
+      this._initialBounds = relativeBounds(this._getScaledBoundingClientRect(), this._offsetSprite.initialBounds);
     } else {
-      this._initialBounds = this.element.getBoundingClientRect();
+      this._initialBounds = this._getScaledBoundingClientRect();
     }
     this._initialComputedStyle = copyComputedStyle(this.element);
     this._initialPosition = this._getCurrentPosition();
@@ -450,15 +459,42 @@ export default class Sprite {
       throw new Error("Sprite already has final bounds");
     }
     this._inInitialPosition = false;
+
     if (this._offsetSprite) {
-      this._finalBounds = relativeBounds(this.element.getBoundingClientRect(), this._offsetSprite.finalBounds);
+      // debugger;
+      this._finalBounds = relativeBounds(this._getScaledBoundingClientRect(), this._offsetSprite.finalBounds);
     } else {
-      this._finalBounds = this.element.getBoundingClientRect();
+      this._finalBounds = this._getScaledBoundingClientRect();
     }
     this._finalComputedStyle = copyComputedStyle(this.element);
     this._finalPosition = this._getCurrentPosition();
     this._originalFinalBounds = this._finalBounds;
     this._finalCumulativeTransform = cumulativeTransform(this.element);
+  }
+
+  _getScaledBoundingClientRect() {
+    const rect = this.element.getBoundingClientRect();
+
+    let xScale = this.cumulativeTransform.a;
+    let yScale = this.cumulativeTransform.d;
+
+    if (xScale === 1 && yScale === 1) {
+      return rect;
+    }
+
+    let scaled = {};
+
+    for (let key in rect) {
+      if (key === 'left') {
+        scaled[key] = rect[key] * (1 / xScale);
+      } else if (key === 'right') {
+        scaled[key] = rect[key] * (1 / yScale);
+      } else {
+        scaled[key] = rect[key];
+      }
+    }
+
+    return scaled;
   }
 
   /**
@@ -809,6 +845,7 @@ export default class Sprite {
     @return {void}
   */
   rehome(newOffsetSprite) {
+    console.log('AA, rehome', newOffsetSprite);
     let screenBounds = this.absoluteInitialBounds;
     let newRelativeBounds = shiftedBounds(screenBounds, -newOffsetSprite.initialBounds.left, -newOffsetSprite.initialBounds.top);
 
@@ -852,6 +889,8 @@ export default class Sprite {
     @return {void}
   */
   startAtSprite(otherSprite) {
+    console.log('AA, startAtSprite', otherSprite);
+
     continueMotions(otherSprite.element, this.element);
     let diff = this.difference('finalBounds', otherSprite, 'initialBounds');
     this.startTranslatedBy(-diff.dx, -diff.dy);
@@ -869,6 +908,8 @@ export default class Sprite {
     @return {void}
   */
   startAtPixel({ x, y }) {
+    console.log('AA, startAtPixel', x, y);
+
     let dx = 0;
     let dy = 0;
     if (x != null) {
@@ -895,6 +936,7 @@ export default class Sprite {
     @return {void}
   */
   startTranslatedBy(dx, dy) {
+    console.log('AA, startTranslatedBy', dx, dy);
     let priorInitialBounds = this._initialBounds;
     let offsetX = 0;
     let offsetY = 0;
@@ -921,6 +963,8 @@ export default class Sprite {
     @return {void}
   */
   moveToFinalPosition() {
+    console.log('AA, moveToFinalPosition');
+
     if (this._inInitialPosition) {
       let initial = this._initialBounds;
       let final = this._finalBounds;
@@ -998,6 +1042,7 @@ export default class Sprite {
 }
 
 function findOffsets(element, computedStyle, transform, offsetSprite) {
+  console.log('AA findOffsets');
   let ownBounds = element.getBoundingClientRect();
   let left = ownBounds.left;
   let top = ownBounds.top;

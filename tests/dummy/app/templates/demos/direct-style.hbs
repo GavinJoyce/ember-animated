@@ -1,8 +1,7 @@
-<div class="scenario-direct-style">
-  <div>
-    <button {{action "go"}}>Go</button>
-  </div>
 
+
+<div class="scenario-direct-style">
+  {{!-- <div style="position: fixed; left: 100px; top: 0; background: blue;">l</div> --}}
   {{#animated-container}}
     {{#animated-each items use=transition key="id" watch="style" as |item|}}
       <div class="scenario-direct-style--item" style={{item.style}} >
@@ -11,7 +10,7 @@
     {{/animated-each}}
 
     {{#each items key="id" as |item|}}
-    <div class="scenario-direct-style--item scenario-direct-style--frame" style={{item.style}} >
+      <div class="scenario-direct-style--item scenario-direct-style--frame" style={{item.style}} >
         {{item.id}}
       </div>
     {{/each}}
@@ -20,3 +19,22 @@
   {{/animated-container}}
 
 </div>
+
+<div style="margin-top: 200px;">
+
+  <label>scale:</label>
+
+    <button onclick={{action 'changeScale' 0.5}}>50%</button>
+    <button onclick={{action 'changeScale' 0.8}}>80%</button>
+    <button onclick={{action 'changeScale' 0.9}}>90%</button>
+    <button onclick={{action 'changeScale' 1}}>100%</button>
+    <button onclick={{action 'changeScale' 1.1}}>110%</button>
+    <button onclick={{action 'changeScale' 1.2}}>120%</button>
+    <button onclick={{action 'changeScale' 1.5}}>150%</button>
+
+    <div>
+    <button {{action "go"}}>Go</button>
+  </div>
+</div>
+
+{{!-- <div style="position: fixed; left: 100px; top: 0; background: red;">l</div> --}}

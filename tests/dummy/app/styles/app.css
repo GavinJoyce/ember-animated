@@ -54,6 +54,7 @@
 .hero-list {
     display: flex;
     flex-wrap: wrap;
+    border: 1px solid green;
 }
 
 .hero-list > div {
@@ -79,8 +80,8 @@
 }
 
 .hero-detail {
-    margin-left: 6rem;
-    margin-top: 6rem;
+    /* margin-left: 6rem;
+    margin-top: 6rem; */
 }
 
 .hero-detail-image {
